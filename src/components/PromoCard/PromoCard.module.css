@@ -1,0 +1,32 @@
+.thumbnail {
+  width: 236px;
+  height: 345px;
+}
+
+.card {
+  padding: 12px 22px;
+  background-color: white;
+  width: 290px;
+}
+
+.author {
+  font-style: italic;
+  color: #929292;
+}
+
+.description {
+  line-height: 1;
+}
+
+.price {
+  color: #44b200;
+}
+
+.button {
+  width: 100%;
+  background-color: #393939;
+  color: white;
+  font-weight: bold;
+  padding: 8px 0;
+  border: none;
+}

@@ -1,0 +1,22 @@
+.customForm {
+  border: 2px solid #bcbcbc !important;
+  background-color: #d2d2d240 !important;
+}
+
+.customForm:focus {
+  outline: none !important;
+}
+
+.formButton {
+  width: 100%;
+  border-radius: 0;
+  background-color: #393939;
+  border: none;
+  font-weight: bold;
+  color: white;
+  padding: 5px;
+}
+
+.formButton:hover {
+  background-color: #393939;
+}

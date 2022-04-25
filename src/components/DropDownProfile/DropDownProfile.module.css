@@ -1,0 +1,21 @@
+.profile {
+  border-radius: 50%;
+}
+
+.menus {
+  top: 60px !important;
+}
+
+.arrow {
+  position: absolute;
+  right: 12px;
+  top: -10px;
+}
+
+.arrowUp {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
+}
