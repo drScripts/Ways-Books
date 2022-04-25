@@ -4,7 +4,7 @@ export const UserContext = createContext();
 
 const initialState = {
   user: null,
-  isLogin: false,
+  isLogin: true,
   cart: 0,
   token: null,
 };

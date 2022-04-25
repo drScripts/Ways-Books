@@ -26,15 +26,8 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
   };
 
   return (
-    <Modal
-      show={show}
-      onHide={handleClose}
-      backdrop="static"
-      centered
-      keyboard={false}
-      size="sm"
-    >
-      <Modal.Header closeButton className="border-0">
+    <Modal show={show} onHide={handleClose} centered size="sm">
+      <Modal.Header className="border-0">
         <Modal.Title>{isLogin ? "Login" : "Register"}</Modal.Title>
       </Modal.Header>
       <Modal.Body>

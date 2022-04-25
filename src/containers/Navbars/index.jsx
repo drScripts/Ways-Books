@@ -36,30 +36,42 @@ const Navbars = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto gap-3 align-items-md-center">
-            <NavbarButton
-              title={"Login"}
-              isLogin={isLogin}
-              handleClose={handleClose}
-              handleShow={handleShow}
-              show={show}
-            />
-            <NavbarButton
-              title={"Register"}
-              outlineOnly={false}
-              isLogin={isLogin}
-              handleClose={handleClose}
-              handleShow={handleShow}
-              show={show}
-            />
-            <Link to={"/"} className={`${styles.wrapper}`}>
-              <div>
-                <img src={cartLogo} alt="Cart Logo" width={35} height={35} />
-                <Badge bg="" pill className={styles.cartCount}>
-                  {state.cart > 9 ? "+9" : state?.cart}
-                </Badge>
-              </div>
-            </Link>
-            <DropDownProfile />
+            {state?.isLogin ? (
+              <>
+                <Link to={"/"} className={`${styles.wrapper}`}>
+                  <div>
+                    <img
+                      src={cartLogo}
+                      alt="Cart Logo"
+                      width={35}
+                      height={35}
+                    />
+                    <Badge bg="" pill className={styles.cartCount}>
+                      {state.cart > 9 ? "+9" : state?.cart}
+                    </Badge>
+                  </div>
+                </Link>
+                <DropDownProfile />
+              </>
+            ) : (
+              <>
+                <NavbarButton
+                  title={"Login"}
+                  isLogin={isLogin}
+                  handleClose={handleClose}
+                  handleShow={handleShow}
+                  show={show}
+                />
+                <NavbarButton
+                  title={"Register"}
+                  outlineOnly={false}
+                  isLogin={isLogin}
+                  handleClose={handleClose}
+                  handleShow={handleShow}
+                  show={show}
+                />{" "}
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
