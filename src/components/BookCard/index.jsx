@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const BookCard = () => {
   return (
     <Col className="mb-3">
-      <Link to={"/"} className="text-decoration-none">
+      <Link to={"/book/2"} className="text-decoration-none">
         <img
           src={thumbnail}
           alt="Thumbnail"
