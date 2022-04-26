@@ -5,6 +5,7 @@ import styles from "./DropDownProfile.module.css";
 import profileIcon from "../../assets/icons/profile.png";
 import complain from "../../assets/icons/complain.png";
 import logout from "../../assets/icons/logout.png";
+import { Link } from "react-router-dom";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
@@ -40,9 +41,11 @@ const DropDownProfile = () => {
           <img src={profileIcon} alt="Profile" width={20} height={20} />
           Profile
         </Dropdown.Item>
-        <Dropdown.Item className={"align-items-center d-flex gap-2"}>
-          <img src={complain} alt="Complain" width={20} height={20} />
-          Complain
+        <Dropdown.Item>
+          <Link to={"/complain"} className={"align-items-center d-flex gap-2"}>
+            <img src={complain} alt="Complain" width={20} height={20} />
+            Complain
+          </Link>
         </Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Item className={"align-items-center d-flex gap-2"}>

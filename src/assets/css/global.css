@@ -51,3 +51,8 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.m-none {
+  margin: 0;
+  padding: 0;
+}
