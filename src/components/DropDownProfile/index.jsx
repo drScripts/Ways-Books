@@ -37,9 +37,11 @@ const DropDownProfile = () => {
         <div className={styles.arrow}>
           <div className={styles.arrowUp}></div>
         </div>
-        <Dropdown.Item className={"align-items-center d-flex gap-2"}>
-          <img src={profileIcon} alt="Profile" width={20} height={20} />
-          Profile
+        <Dropdown.Item>
+          <Link to={"/profile"} className={"align-items-center d-flex gap-2"}>
+            <img src={profileIcon} alt="Profile" width={20} height={20} />
+            Profile
+          </Link>
         </Dropdown.Item>
         <Dropdown.Item>
           <Link to={"/complain"} className={"align-items-center d-flex gap-2"}>
