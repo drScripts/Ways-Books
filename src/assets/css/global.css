@@ -60,3 +60,7 @@ a {
 .text-grey {
   color: #8a8c90;
 }
+
+.smallRadius {
+  border-radius: 1px;
+}

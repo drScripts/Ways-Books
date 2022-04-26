@@ -11,7 +11,7 @@ const BookCard = () => {
         <img
           src={thumbnail}
           alt="Thumbnail"
-          className={`${styles.thumbnail}`}
+          className={`${styles.thumbnail} smallRadius`}
         />
         <h4 className={`text-dark ellipsis`}>My Own Private Mr. Cool</h4>
         <p className={styles.author}>By. Indah Hanaco</p>

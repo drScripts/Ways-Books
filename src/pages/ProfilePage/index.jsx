@@ -15,7 +15,7 @@ const ProfilePage = () => {
     <div>
       <Navbars />
       <HeroLayer />
-      <Container className={"px-5 mt-5"}>
+      <Container className={"px-md-5 mt-5"}>
         <h3>Profile</h3>
         <Card className={`${styles.profileCard} mb-5`}>
           <Card.Body>
@@ -54,7 +54,7 @@ const ProfilePage = () => {
           </Card.Body>
         </Card>
         <h3>My Books</h3>
-        <Row md={5}>
+        <Row md={5} xs={2}>
           <PurchasedBookCard />
           <PurchasedBookCard />
           <PurchasedBookCard />
