@@ -7,7 +7,7 @@ import cartLogo from "../../assets/icons/cart.png";
 import { Link } from "react-router-dom";
 import styles from "./Navbars.module.css";
 
-const Navbars = () => {
+const Navbars = ({ isAdmin = false }) => {
   const [state] = useContext(UserContext);
   const [isLogin, setIsLogin] = useState(true);
   const [show, setShow] = useState(false);
@@ -53,7 +53,7 @@ const Navbars = () => {
                     </Badge>
                   </div>
                 </Link>
-                <DropDownProfile />
+                <DropDownProfile isAdmin={isAdmin} />
               </>
             ) : (
               <>

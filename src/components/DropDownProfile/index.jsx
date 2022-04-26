@@ -5,6 +5,7 @@ import styles from "./DropDownProfile.module.css";
 import profileIcon from "../../assets/icons/profile.png";
 import complain from "../../assets/icons/complain.png";
 import logout from "../../assets/icons/logout.png";
+import addBook from "../../assets/icons/add-book.png";
 import { Link } from "react-router-dom";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -20,7 +21,55 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </a>
 ));
 
-const DropDownProfile = () => {
+const DropdownItemAdmin = () => {
+  return (
+    <>
+      <Dropdown.Item>
+        <Link to={"/profile"} className={"align-items-center d-flex gap-2"}>
+          <img src={addBook} alt="Add Books" width={20} height={20} />
+          Add Book
+        </Link>
+      </Dropdown.Item>
+      <Dropdown.Item>
+        <Link to={"/complain"} className={"align-items-center d-flex gap-2"}>
+          <img src={complain} alt="Complain" width={20} height={20} />
+          Complain
+        </Link>
+      </Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item className={"align-items-center d-flex gap-2"}>
+        <img src={logout} alt="Logout" width={20} height={20} />
+        Log out
+      </Dropdown.Item>
+    </>
+  );
+};
+
+const DropdownItem = () => {
+  return (
+    <>
+      <Dropdown.Item>
+        <Link to={"/profile"} className={"align-items-center d-flex gap-2"}>
+          <img src={profileIcon} alt="Profile" width={20} height={20} />
+          Profile
+        </Link>
+      </Dropdown.Item>
+      <Dropdown.Item>
+        <Link to={"/complain"} className={"align-items-center d-flex gap-2"}>
+          <img src={complain} alt="Complain" width={20} height={20} />
+          Complain
+        </Link>
+      </Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item className={"align-items-center d-flex gap-2"}>
+        <img src={logout} alt="Logout" width={20} height={20} />
+        Log out
+      </Dropdown.Item>
+    </>
+  );
+};
+
+const DropDownProfile = ({ isAdmin }) => {
   return (
     <Dropdown align={"end"}>
       <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
@@ -37,23 +86,7 @@ const DropDownProfile = () => {
         <div className={styles.arrow}>
           <div className={styles.arrowUp}></div>
         </div>
-        <Dropdown.Item>
-          <Link to={"/profile"} className={"align-items-center d-flex gap-2"}>
-            <img src={profileIcon} alt="Profile" width={20} height={20} />
-            Profile
-          </Link>
-        </Dropdown.Item>
-        <Dropdown.Item>
-          <Link to={"/complain"} className={"align-items-center d-flex gap-2"}>
-            <img src={complain} alt="Complain" width={20} height={20} />
-            Complain
-          </Link>
-        </Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item className={"align-items-center d-flex gap-2"}>
-          <img src={logout} alt="Logout" width={20} height={20} />
-          Log out
-        </Dropdown.Item>
+        {isAdmin ? <DropdownItemAdmin /> : <DropdownItem />}
       </Dropdown.Menu>
     </Dropdown>
   );

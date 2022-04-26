@@ -8,7 +8,7 @@ import sendLogo from "../../assets/icons/send_logo.png";
 const ComplainPage = ({ isAdmin = false }) => {
   return (
     <div>
-      <Navbars />
+      <Navbars isAdmin={isAdmin} />
       <HeroLayer />
       <Container>
         {isAdmin && <h4>Customer Complain</h4>}

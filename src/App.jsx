@@ -15,7 +15,7 @@ function App() {
       <Route path="/complain" element={<ComplainPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/admin/complain" element={<ComplainPage isAdmin />} />
-      <Route path="/admin/transaction" element={<TransactionPage />} />
+      <Route path="/admin" element={<TransactionPage />} />
     </Routes>
   );
 }

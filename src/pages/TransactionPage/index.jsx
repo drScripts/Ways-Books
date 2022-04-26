@@ -133,7 +133,7 @@ const data = [
 const TransactionPage = () => {
   return (
     <div>
-      <Navbars />
+      <Navbars isAdmin />
       <HeroLayer />
       <Container className={"px-md-5 mt-5"}>
         <h3>Incoming Transaction</h3>
