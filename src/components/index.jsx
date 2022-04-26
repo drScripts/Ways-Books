@@ -4,6 +4,7 @@ import BookCard from "./BookCard";
 import DropDownProfile from "./DropDownProfile";
 import ProfileItem from "./ProfileItem";
 import PurchasedBookCard from "./PurchasedBookCard";
+import InputFileButton from "./InputFileButton";
 
 export {
   NavbarButton,
@@ -12,4 +13,5 @@ export {
   DropDownProfile,
   ProfileItem,
   PurchasedBookCard,
+  InputFileButton,
 };

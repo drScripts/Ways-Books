@@ -6,6 +6,7 @@ import profileIcon from "../../assets/icons/profile.png";
 import complain from "../../assets/icons/complain.png";
 import logout from "../../assets/icons/logout.png";
 import addBook from "../../assets/icons/add-book.png";
+import listBook from "../../assets/icons/list-book.png";
 import { Link } from "react-router-dom";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -25,7 +26,19 @@ const DropdownItemAdmin = () => {
   return (
     <>
       <Dropdown.Item>
-        <Link to={"/profile"} className={"align-items-center d-flex gap-2"}>
+        <Link
+          to={"/admin/add-book"}
+          className={"align-items-center d-flex gap-2"}
+        >
+          <img src={listBook} alt="List Books" width={20} height={20} />
+          List Book
+        </Link>
+      </Dropdown.Item>
+      <Dropdown.Item>
+        <Link
+          to={"/admin/add-book"}
+          className={"align-items-center d-flex gap-2"}
+        >
           <img src={addBook} alt="Add Books" width={20} height={20} />
           Add Book
         </Link>

@@ -1,0 +1,17 @@
+.btnInput:hover {
+  cursor: pointer;
+}
+
+.overrideInput {
+  background-color: #d2d2d240 !important;
+  border: 2px solid #bcbcbc !important;
+  color: #333333 !important;
+}
+
+.customBtn {
+  background-color: #393939;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  font-weight: 500;
+}
