@@ -26,10 +26,7 @@ const DropdownItemAdmin = () => {
   return (
     <>
       <Dropdown.Item>
-        <Link
-          to={"/admin/add-book"}
-          className={"align-items-center d-flex gap-2"}
-        >
+        <Link to={"/admin/books"} className={"align-items-center d-flex gap-2"}>
           <img src={listBook} alt="List Books" width={20} height={20} />
           List Book
         </Link>
@@ -44,7 +41,10 @@ const DropdownItemAdmin = () => {
         </Link>
       </Dropdown.Item>
       <Dropdown.Item>
-        <Link to={"/complain"} className={"align-items-center d-flex gap-2"}>
+        <Link
+          to={"/admin/complain"}
+          className={"align-items-center d-flex gap-2"}
+        >
           <img src={complain} alt="Complain" width={20} height={20} />
           Complain
         </Link>

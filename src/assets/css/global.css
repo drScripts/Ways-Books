@@ -29,6 +29,10 @@ a {
   -webkit-line-clamp: 4;
 }
 
+.ellipsis.max1 {
+  -webkit-line-clamp: 1;
+}
+
 ::-webkit-scrollbar {
   height: 5px;
   width: 5px;
@@ -63,4 +67,13 @@ a {
 
 .smallRadius {
   border-radius: 1px;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.text-description {
+  white-space: pre-line;
+  text-align: justify;
 }

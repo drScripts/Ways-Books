@@ -5,6 +5,8 @@ import DropDownProfile from "./DropDownProfile";
 import ProfileItem from "./ProfileItem";
 import PurchasedBookCard from "./PurchasedBookCard";
 import InputFileButton from "./InputFileButton";
+import Thumbnailtable from "./ThumbnailTable";
+import TableDescription from "./TableDescription";
 
 export {
   NavbarButton,
@@ -14,4 +16,6 @@ export {
   ProfileItem,
   PurchasedBookCard,
   InputFileButton,
+  Thumbnailtable,
+  TableDescription,
 };

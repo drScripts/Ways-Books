@@ -6,6 +6,7 @@ import {
   ProfilePage,
   TransactionPage,
   AddBookPage,
+  ListBookPage,
 } from "./pages";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/admin" element={<TransactionPage />} />
       <Route path="/admin/complain" element={<ComplainPage isAdmin />} />
+      <Route path="/admin/books" element={<ListBookPage />} />
       <Route path="/admin/add-book" element={<AddBookPage />} />
     </Routes>
   );

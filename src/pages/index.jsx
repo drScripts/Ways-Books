@@ -4,6 +4,7 @@ import ComplainPage from "./ComplainPage";
 import ProfilePage from "./ProfilePage";
 import TransactionPage from "./TransactionPage";
 import AddBookPage from "./AddBookPage";
+import ListBookPage from "./ListBookPage";
 
 export {
   LandingPage,
@@ -12,4 +13,5 @@ export {
   ProfilePage,
   TransactionPage,
   AddBookPage,
+  ListBookPage,
 };
