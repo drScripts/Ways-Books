@@ -7,6 +7,7 @@ import PurchasedBookCard from "./PurchasedBookCard";
 import InputFileButton from "./InputFileButton";
 import Thumbnailtable from "./ThumbnailTable";
 import TableDescription from "./TableDescription";
+import CartItem from "./CartItem";
 
 export {
   NavbarButton,
@@ -18,4 +19,5 @@ export {
   InputFileButton,
   Thumbnailtable,
   TableDescription,
+  CartItem,
 };

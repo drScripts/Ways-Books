@@ -77,3 +77,9 @@ a {
   white-space: pre-line;
   text-align: justify;
 }
+
+.mx-0 {
+  margin-left: 0;
+  margin-left: 0;
+  padding: 0;
+}

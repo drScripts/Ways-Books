@@ -1,0 +1,16 @@
+.price {
+  color: #44b200;
+  font-weight: bold;
+}
+
+.author {
+  color: #929292;
+  font-style: italic;
+}
+
+.qtyBtn {
+  padding: 2px;
+  background-color: aqua;
+  border: none;
+  border-radius: 10px;
+}

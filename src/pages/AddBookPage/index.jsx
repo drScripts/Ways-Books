@@ -145,7 +145,7 @@ const AddBookPage = () => {
             />
           </div>
           <div className="text-end">
-            <button className={`${styles.customBtn}`}>
+            <button className={`${styles.customBtn} mt-3`}>
               Add Book
               <img
                 src={addBookWhite}

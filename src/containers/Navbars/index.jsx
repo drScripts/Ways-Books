@@ -40,7 +40,7 @@ const Navbars = ({ isAdmin = false }) => {
           <Nav className="ms-auto gap-3 align-items-md-center">
             {state?.isLogin ? (
               <>
-                <Link to={"/"} className={`${styles.wrapper}`}>
+                <Link to={"/cart"} className={`${styles.wrapper}`}>
                   <div>
                     <img
                       src={cartLogo}

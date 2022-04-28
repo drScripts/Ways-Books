@@ -7,12 +7,14 @@ import {
   TransactionPage,
   AddBookPage,
   ListBookPage,
+  CartPage,
 } from "./pages";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/cart" element={<CartPage />} />
       <Route path="/book/:id" element={<DetailBookPage />} />
       <Route path="/complain" element={<ComplainPage />} />
       <Route path="/profile" element={<ProfilePage />} />
