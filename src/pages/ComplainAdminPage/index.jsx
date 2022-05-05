@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Container, Form } from "react-bootstrap";
-import { Navbars, HeroLayer } from "../../containers";
-import profile from "../../assets/images/profile.jpg";
-import styles from "./ComplainPage.module.css";
+import { Card, Container, Form } from "react-bootstrap";
+import { HeroLayer, Navbars } from "../../containers";
+import styles from "./ComplainAdminPage.module.css";
 import sendLogo from "../../assets/icons/send_logo.png";
+import profile from "../../assets/images/profile.jpg";
 import io from "socket.io-client";
+import { UserContact } from "../../components";
 import ChatItem from "../../components/ChatItem";
 
 let socket;
 
-const ComplainPage = () => {
+export default function ComplainAdminPage() {
   const [contact, setContact] = useState({});
+  const [contacts, setContacts] = useState([]);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const [connectedUsers, setConnectedUsers] = useState([]);
-  const [isRecipientOnline, setIsRecipientOnline] = useState(false);
+  const [recipientIsOnline, setRecipientIsOnline] = useState(false);
+  const [userConnected, setUserConnected] = useState([]);
 
-  const loadAdminContact = () => {
-    socket.emit("load admin contact");
+  const loadUserContacts = () => {
+    socket.emit("load user contact");
 
-    socket.on("admin contact loaded", (value) => {
-      setContact(value);
+    socket.on("user contact loaded", (value) => {
+      if (value?.length > 0) {
+        setContact(value[0]);
+      }
+      setContacts(value);
     });
   };
 
@@ -30,29 +35,24 @@ const ComplainPage = () => {
     });
   };
 
-  const messageOnNewMessage = () => {
+  const onNewMessage = () => {
     socket.on("new message", () => {
-      socket.emit("load message", contact?.id);
+      socket.emit("load message", contact?.sender?.id);
     });
   };
 
-  const onSubmitHandler = () => {
+  const submitHandler = () => {
     if (message) {
-      socket.emit("send message", contact?.id, message);
+      socket.emit("send message", contact?.sender?.id, message);
     }
 
     setMessage("");
   };
 
-  const onKeyPressed = (e) => {
-    if (e.code === "Enter") {
-      onSubmitHandler();
-    }
-  };
-
-  const userConnectedUpdate = () => {
+  const userConnectedchange = () => {
+    socket.emit("get connected user");
     socket.on("user connected update", (value) => {
-      setConnectedUsers(value);
+      setUserConnected(value);
     });
   };
 
@@ -62,10 +62,11 @@ const ComplainPage = () => {
         token: localStorage.getItem("usrtkn"),
       },
     });
-    loadAdminContact();
+
+    onNewMessage();
+    loadUserContacts();
     messageWatcher();
-    messageOnNewMessage();
-    userConnectedUpdate();
+    userConnectedchange();
     return () => {
       socket.disconnect();
     };
@@ -73,60 +74,66 @@ const ComplainPage = () => {
   }, [messages]);
 
   useEffect(() => {
-    if (contact?.id) {
-      socket.emit("load message", contact?.id);
+    if (contact?.sender?.id) {
+      socket.emit("load message", contact?.sender?.id);
     }
-  }, [contact?.id]);
+  }, [contact?.sender?.id]);
 
   useEffect(() => {
-    if (connectedUsers.length - 1 < contact?.id) {
-      setIsRecipientOnline(false);
+    if (userConnected.length < contact?.sender?.id) {
+      setRecipientIsOnline(false);
     } else {
-      if (connectedUsers[contact?.id]) {
-        setIsRecipientOnline(true);
+      if (userConnected[contact?.sender?.id]) {
+        setRecipientIsOnline(true);
       } else {
-        setIsRecipientOnline(false);
+        setRecipientIsOnline(false);
       }
     }
-  }, [connectedUsers, contact]);
+  }, [userConnected, contact]);
 
   return (
     <div>
-      <Navbars />
+      <Navbars isAdmin />
       <HeroLayer />
       <Container>
+        <h4>Customer Complain</h4>
         <div className="d-flex gap-3">
+          <div className="left-side">
+            <Card className={styles.costumerField}>
+              {contacts?.map((contactuser) => (
+                <UserContact contact={contactuser} key={contactuser?.id} />
+              ))}
+            </Card>
+          </div>
           <div className="right-side flex-fill">
             <div className={`${styles.header} d-flex gap-3`}>
               <img
-                src={contact?.profile?.profilePict || profile}
+                src={contact?.sender?.profile?.profilePict || profile}
                 alt="Profile Recipient"
                 className={`${styles.profile}`}
                 width={48}
                 height={48}
               />
               <div>
-                <h6 className={`m-none`}>{contact?.name}</h6>
+                <h6 className={`m-none`}>{contact?.sender?.name}</h6>
                 <div className={"m-none d-flex align-items-center gap-1"}>
                   <div
                     className={`${styles.indicator} ${
-                      isRecipientOnline ? styles.greens : ""
+                      recipientIsOnline ? styles.greens : ""
                     }`}
                   ></div>
                   <div className={`${styles.indicatorText} `}>
-                    {isRecipientOnline ? "online" : "offline"}
+                    {recipientIsOnline ? "online" : "offline"}
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              className={`${styles.chatField} ${styles.fullSize} d-flex flex-column`}
-            >
+            <div className={`${styles.chatField} d-flex flex-column`}>
               <div className={`${styles.chatFields}`}>
                 {messages?.map((message) => (
                   <ChatItem
-                    isCurrent={contact?.id === message?.recipientId}
                     key={message?.id}
+                    isCurrent={contact?.sender?.id !== message?.senderId}
                     message={message}
                   />
                 ))}
@@ -140,15 +147,11 @@ const ComplainPage = () => {
                     className={`${styles.formMessage}`}
                     type="email"
                     placeholder="Write your message here ..."
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyDown={onKeyPressed}
                     value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                   />
                 </Form.Group>
-                <button
-                  className={`${styles.btnSend}`}
-                  onClick={onSubmitHandler}
-                >
+                <button className={`${styles.btnSend}`} onClick={submitHandler}>
                   <img src={sendLogo} alt="Send Logo" width={16} height={16} />
                 </button>
               </div>
@@ -158,6 +161,4 @@ const ComplainPage = () => {
       </Container>
     </div>
   );
-};
-
-export default ComplainPage;
+}

@@ -5,7 +5,7 @@ const ProfileItem = ({ src, title, value }) => {
     <div className="d-flex align-items-center gap-3 mb-3">
       <img src={src} alt="User Email" width={30} height={30} />
       <div>
-        <p className={"fw-bold m-none"}>{value}</p>
+        <p className={"fw-bold m-none ellipsis max1"}>{value || "-"}</p>
         <p className={"text-grey m-none"}>{title}</p>
       </div>
     </div>

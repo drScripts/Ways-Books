@@ -8,6 +8,10 @@ import InputFileButton from "./InputFileButton";
 import Thumbnailtable from "./ThumbnailTable";
 import TableDescription from "./TableDescription";
 import CartItem from "./CartItem";
+import CustomForm from "./CutomForm";
+import CustomTextArea from "./CustomTextArea";
+import CustomSelect from "./CustomSelect";
+import UserContact from "./UserContact";
 
 export {
   NavbarButton,
@@ -20,4 +24,8 @@ export {
   Thumbnailtable,
   TableDescription,
   CartItem,
+  CustomForm,
+  CustomTextArea,
+  CustomSelect,
+  UserContact,
 };

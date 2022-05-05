@@ -2,15 +2,17 @@ import { Navbar, Nav, Container, Badge } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import { NavbarButton, DropDownProfile } from "../../components";
 import { UserContext } from "../../context/UserContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import cartLogo from "../../assets/icons/cart.png";
 import { Link } from "react-router-dom";
 import styles from "./Navbars.module.css";
+import { useSearchParams } from "react-router-dom";
 
 const Navbars = ({ isAdmin = false }) => {
   const [state] = useContext(UserContext);
   const [isLogin, setIsLogin] = useState(true);
   const [show, setShow] = useState(false);
+  const [params] = useSearchParams();
 
   const handleClose = () => {
     setShow(false);
@@ -20,6 +22,13 @@ const Navbars = ({ isAdmin = false }) => {
     setIsLogin(type);
     setShow(true);
   };
+
+  useEffect(() => {
+    const login = params.get("login");
+    if (!state?.user && login === "no") {
+      setShow(true);
+    }
+  }, [state?.user, params]);
 
   return (
     <Navbar expand="lg">
@@ -40,19 +49,21 @@ const Navbars = ({ isAdmin = false }) => {
           <Nav className="ms-auto gap-3 align-items-md-center">
             {state?.isLogin ? (
               <>
-                <Link to={"/cart"} className={`${styles.wrapper}`}>
-                  <div>
-                    <img
-                      src={cartLogo}
-                      alt="Cart Logo"
-                      width={35}
-                      height={35}
-                    />
-                    <Badge bg="" pill className={styles.cartCount}>
-                      {state.cart > 9 ? "+9" : state?.cart}
-                    </Badge>
-                  </div>
-                </Link>
+                {state?.user?.role !== "admin" && (
+                  <Link to={"/cart"} className={`${styles.wrapper}`}>
+                    <div>
+                      <img
+                        src={cartLogo}
+                        alt="Cart Logo"
+                        width={35}
+                        height={35}
+                      />
+                      <Badge bg="" pill className={styles.cartCount}>
+                        {state.cart > 9 ? "+9" : state?.cart}
+                      </Badge>
+                    </div>
+                  </Link>
+                )}
                 <DropDownProfile isAdmin={isAdmin} />
               </>
             ) : (
@@ -71,7 +82,7 @@ const Navbars = ({ isAdmin = false }) => {
                   handleClose={handleClose}
                   handleShow={handleShow}
                   show={show}
-                />{" "}
+                />
               </>
             )}
           </Nav>

@@ -8,6 +8,7 @@ const InputFileButton = ({
   accept = "image/*",
   fileName = "File Name",
   onChangeHandler,
+  className,
 }) => {
   const onChange = (e) => {
     const file = e?.target?.files[0];
@@ -17,7 +18,7 @@ const InputFileButton = ({
   };
 
   return (
-    <div className="d-flex align-items-center gap-3">
+    <div className={`d-flex align-items-center gap-3 ${className}`}>
       <label htmlFor={id} className={`${styles.btnInput}`}>
         <input
           type="file"

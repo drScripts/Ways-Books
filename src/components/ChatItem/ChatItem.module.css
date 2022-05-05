@@ -1,0 +1,10 @@
+.messages {
+  width: fit-content;
+  max-width: 80%;
+  margin-bottom: 5px;
+}
+
+.right {
+  justify-content: flex-end;
+  display: flex;
+}

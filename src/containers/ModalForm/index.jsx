@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Modal, Form } from "react-bootstrap";
+import { useMutation } from "react-query";
+import { toast } from "react-toastify";
+import { UserContext } from "../../context/UserContext";
+import API from "../../services";
 import styles from "./ModalForm.module.css";
 
 const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
@@ -8,6 +12,68 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
     email: "",
     password: "",
   });
+
+  const [, dispatch] = useContext(UserContext);
+
+  const { mutate: register } = useMutation(
+    async () => {
+      const { full_name, email, password } = state;
+
+      const bodyData = JSON.stringify({ name: full_name, email, password });
+
+      const { data } = await API.post("/register", bodyData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const token = data?.data?.token;
+      const user = data?.data?.user;
+
+      handleClose();
+      dispatch({
+        type: "SUCCESS_REGISTER",
+        payload: { token, user },
+      });
+      return data;
+    },
+    {
+      onError: (err) => {
+        const message = err?.response?.data?.message || err?.message;
+        toast.error(message);
+      },
+    }
+  );
+
+  const { mutate: login } = useMutation(
+    async () => {
+      const { email, password } = state;
+
+      const bodyData = JSON.stringify({ email, password });
+      const { data } = await API.post("/login", bodyData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const user = data?.data?.user;
+      const token = data?.data?.token;
+
+      handleClose();
+      dispatch({
+        type: "SUCCESS_LOGIN",
+        payload: { user, token },
+      });
+
+      return data;
+    },
+    {
+      onError: (err) => {
+        const message = err?.response?.data?.message || err?.message;
+        toast.error(message);
+      },
+    }
+  );
 
   const onChange = (e) => {
     setState({
@@ -18,15 +84,19 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
+    if (isLogin) {
+      login();
+    } else {
+      register();
+    }
   };
 
-  const cleatState = () => {
+  const clearState = () => {
     setState({ full_name: "", email: "", password: "" });
   };
 
   return (
-    <Modal show={show} onHide={handleClose} centered size="sm">
+    <Modal show={show} onHide={handleClose} centered>
       <Modal.Header className="border-0">
         <Modal.Title>{isLogin ? "Login" : "Register"}</Modal.Title>
       </Modal.Header>
@@ -79,7 +149,7 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
             <span
               className="text-decoration-none fw-bold"
               onClick={() => {
-                cleatState();
+                clearState();
                 changeForm({ type: false });
               }}
             >
@@ -92,7 +162,7 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
             <span
               className="text-decoration-none fw-bold"
               onClick={() => {
-                cleatState();
+                clearState();
                 changeForm({ type: true });
               }}
             >

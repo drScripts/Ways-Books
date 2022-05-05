@@ -15,20 +15,20 @@ createTheme("light", {
 
 const columns = [
   {
-    name: <th className={"text-danger"}>No</th>,
+    name: <h6 className={"text-danger"}>No</h6>,
     selector: (row) => row.no,
     sortable: true,
   },
   {
-    name: <th className={"text-danger"}>Users</th>,
+    name: <h6 className={"text-danger"}>Users</h6>,
     selector: (row) => row.user,
   },
   {
-    name: <th className={"text-danger"}>Product Purchased</th>,
+    name: <h6 className={"text-danger"}>Product Purchased</h6>,
     selector: (row) => row.book,
   },
   {
-    name: <th className={"text-danger"}>Total Payment</th>,
+    name: <h6 className={"text-danger"}>Total Payment</h6>,
     selector: (row) => row.total,
     sortable: true,
     conditionalCellStyles: [
@@ -59,7 +59,7 @@ const columns = [
     ),
   },
   {
-    name: <th className={"text-danger"}>Status Payment</th>,
+    name: <h6 className={"text-danger"}>Status Payment</h6>,
     selector: (row) => row.status,
     conditionalCellStyles: [
       {

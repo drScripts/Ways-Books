@@ -5,15 +5,24 @@ import { BrowserRouter } from "react-router-dom";
 import UserContext from "./context/UserContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/global.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const client = new QueryClient();
+
 root.render(
   <React.StrictMode>
-    <UserContext>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </UserContext>
+    <QueryClientProvider client={client}>
+      <UserContext>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </UserContext>
+      <ToastContainer />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

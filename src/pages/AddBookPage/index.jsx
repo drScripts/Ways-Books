@@ -6,8 +6,12 @@ import NumberFormat from "react-number-format";
 import attachment from "../../assets/icons/attachment.png";
 import styles from "./AddBookPage.module.css";
 import addBookWhite from "../../assets/icons/white-add-book.png";
+import { toast } from "react-toastify";
+import API from "../../services";
+import { useNavigate } from "react-router-dom";
 
 const AddBookPage = () => {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     title: "",
     publicationDate: "",
@@ -18,6 +22,7 @@ const AddBookPage = () => {
     attachment: null,
     thumbnail: null,
     thumbnail_url: "",
+    author: "",
   });
   const [publicationType, setPublicationType] = useState("text");
 
@@ -29,7 +34,6 @@ const AddBookPage = () => {
   };
 
   const onFileChange = ({ url, file, name }) => {
-    console.log(name);
     setState({
       ...state,
       [name]: file,
@@ -37,12 +41,56 @@ const AddBookPage = () => {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    const formBody = new FormData();
 
     const newPrice = parseInt(state?.price?.split("Rp. ")[1].replace(".", ""));
-    console.log(newPrice);
-    console.log(state);
+    const {
+      attachment,
+      thumbnail,
+      description,
+      title,
+      page,
+      price,
+      publicationDate,
+      ISBN,
+      author,
+    } = state;
+
+    if (
+      attachment?.name &&
+      thumbnail?.name &&
+      description &&
+      title &&
+      page &&
+      price &&
+      publicationDate &&
+      ISBN &&
+      author
+    ) {
+      formBody.append("image", state?.thumbnail);
+      formBody.append("pdf", state?.attachment);
+      formBody.append("description", state?.description);
+      formBody.append("title", state?.title);
+      formBody.append("pages", state?.page);
+      formBody.append("price", newPrice);
+      formBody.append("publicationDate", state?.publicationDate);
+      formBody.append("ISBN", state?.ISBN);
+      formBody.append("author", state?.author);
+
+      const { status, data } = await API.post("/book", formBody).catch(
+        (err) => err?.response
+      );
+
+      if (status !== 201) {
+        toast.error(data?.message);
+      } else {
+        navigate("/admin/books");
+      }
+    } else {
+      toast.error("Please fill all form!");
+    }
   };
 
   return (
@@ -58,6 +106,16 @@ const AddBookPage = () => {
               name="title"
               type="text"
               placeholder="Title"
+              required
+              onChange={onChangeHandler}
+              className={`${styles.overrideInput}`}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="author">
+            <Form.Control
+              name="author"
+              type="text"
+              placeholder="Author"
               required
               onChange={onChangeHandler}
               className={`${styles.overrideInput}`}

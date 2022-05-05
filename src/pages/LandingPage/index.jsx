@@ -1,6 +1,5 @@
-import { Navbars, HeroLayer } from "../../containers";
-import { PromoCard, BookCard } from "../../components";
-import { Container, Row } from "react-bootstrap";
+import { Navbars, HeroLayer, BookList } from "../../containers";
+import { PromoCard } from "../../components";
 import styles from "./LandingPage.module.css";
 
 const LandingPage = () => {
@@ -19,23 +18,7 @@ const LandingPage = () => {
         <PromoCard />
         <PromoCard />
       </div>
-
-      <Container className="mt-5 mb-4">
-        <h1>List Book</h1>
-
-        <Row md={5} sm={2} xs={2}>
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-        </Row>
-      </Container>
+      <BookList />
     </div>
   );
 };

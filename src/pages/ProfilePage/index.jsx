@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Card, Row, Col } from "react-bootstrap";
 import { Navbars, HeroLayer } from "../../containers";
 import { ProfileItem, PurchasedBookCard } from "../../components";
@@ -9,8 +9,11 @@ import gender from "../../assets/icons/gender.png";
 import phone from "../../assets/icons/phone.png";
 import marker from "../../assets/icons/place.png";
 import profile from "../../assets/images/profile.jpg";
+import { UserContext } from "../../context/UserContext";
 
 const ProfilePage = () => {
+  const [state] = useContext(UserContext);
+
   return (
     <div>
       <Navbars />
@@ -24,27 +27,31 @@ const ProfilePage = () => {
                 <ProfileItem
                   src={envelope}
                   title={"Email"}
-                  value={"egigans@gmail.com"}
+                  value={state?.user?.email}
                 />
-                <ProfileItem src={gender} title={"Gender"} value={"Male"} />
+                <ProfileItem
+                  src={gender}
+                  title={"Gender"}
+                  value={state?.user?.profile?.gender}
+                />
                 <ProfileItem
                   src={phone}
                   title={"Mobile Phone"}
-                  value={"0812-8623-8911"}
+                  value={state?.user?.profile?.phoneNumber}
                 />
                 <ProfileItem
                   src={marker}
                   title={"Address"}
-                  value={"Perumahan Permata Bintaro Residence C-3"}
+                  value={state?.user?.profile?.address}
                 />
               </Col>
               <Col md={3}>
                 <img
-                  src={profile}
+                  src={state?.user?.profile?.profilePict || profile}
                   alt="Profile User"
                   className={`${styles.profile} rounded-3`}
                 />
-                <Link to={"/"}>
+                <Link to={"/profile/edit"}>
                   <button className={`${styles.button} mt-3`}>
                     Edit Profile
                   </button>

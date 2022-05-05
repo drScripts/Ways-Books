@@ -83,3 +83,16 @@ a {
   margin-left: 0;
   padding: 0;
 }
+
+.darkButton {
+  background-color: #393939;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: none;
+  border: none;
+}
+
+.mPoint {
+  cursor: pointer;
+}
