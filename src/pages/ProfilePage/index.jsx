@@ -1,7 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Container, Card, Row, Col } from "react-bootstrap";
-import { Navbars, HeroLayer } from "../../containers";
-import { ProfileItem, PurchasedBookCard } from "../../components";
+import {
+  Navbars,
+  HeroLayer,
+  ProfileHistoryTab,
+  ProfileTabController,
+} from "../../containers";
+import { ProfileItem } from "../../components";
 import { Link } from "react-router-dom";
 import styles from "./ProfilePage.module.css";
 import envelope from "../../assets/icons/envelope.png";
@@ -13,6 +18,7 @@ import { UserContext } from "../../context/UserContext";
 
 const ProfilePage = () => {
   const [state] = useContext(UserContext);
+  const [tabs, setTabs] = useState("purchased");
 
   return (
     <div>
@@ -60,12 +66,8 @@ const ProfilePage = () => {
             </Row>
           </Card.Body>
         </Card>
-        <h3>My Books</h3>
-        <Row md={5} xs={2}>
-          <PurchasedBookCard />
-          <PurchasedBookCard />
-          <PurchasedBookCard />
-        </Row>
+        <ProfileHistoryTab onChange={setTabs} className={"my-3"} />
+        <ProfileTabController tabName={tabs} />
       </Container>
     </div>
   );

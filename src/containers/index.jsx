@@ -5,6 +5,9 @@ import BookList from "./BookList";
 import CartList from "./CartList";
 import TransactionInformation from "./TransactionInformation";
 import ShipmentContainers from "./ShipmentContainers";
+import ProfileHistoryTab from "./ProfileHistoryTab";
+import TransactionHistory from "./TransactionHistory";
+import ProfileTabController from "./ProfilleTabController";
 
 export {
   Navbars,
@@ -14,4 +17,7 @@ export {
   CartList,
   TransactionInformation,
   ShipmentContainers,
+  ProfileHistoryTab,
+  TransactionHistory,
+  ProfileTabController,
 };
