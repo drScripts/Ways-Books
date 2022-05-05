@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { Navbars, HeroLayer } from "../../containers";
 import profile from "../../assets/images/profile.jpg";
@@ -15,6 +15,8 @@ const ComplainPage = () => {
   const [message, setMessage] = useState("");
   const [connectedUsers, setConnectedUsers] = useState([]);
   const [isRecipientOnline, setIsRecipientOnline] = useState(false);
+
+  const messageRef = useRef();
 
   const loadAdminContact = () => {
     socket.emit("load admin contact");
@@ -51,6 +53,7 @@ const ComplainPage = () => {
   };
 
   const userConnectedUpdate = () => {
+    socket.emit("get connected user");
     socket.on("user connected update", (value) => {
       setConnectedUsers(value);
     });
@@ -66,6 +69,13 @@ const ComplainPage = () => {
     messageWatcher();
     messageOnNewMessage();
     userConnectedUpdate();
+    if (messageRef.current) {
+      messageRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
     return () => {
       socket.disconnect();
     };
@@ -130,6 +140,7 @@ const ComplainPage = () => {
                     message={message}
                   />
                 ))}
+                <div ref={messageRef}></div>
               </div>
               <div className={"d-flex p-2 gap-3"}>
                 <Form.Group

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, Container, Form } from "react-bootstrap";
 import { HeroLayer, Navbars } from "../../containers";
 import styles from "./ComplainAdminPage.module.css";
@@ -17,6 +17,8 @@ export default function ComplainAdminPage() {
   const [message, setMessage] = useState("");
   const [recipientIsOnline, setRecipientIsOnline] = useState(false);
   const [userConnected, setUserConnected] = useState([]);
+
+  const messageRef = useRef();
 
   const loadUserContacts = () => {
     socket.emit("load user contact");
@@ -49,6 +51,12 @@ export default function ComplainAdminPage() {
     setMessage("");
   };
 
+  const onKeyPressed = (e) => {
+    if (e.code === "Enter") {
+      submitHandler();
+    }
+  };
+
   const userConnectedchange = () => {
     socket.emit("get connected user");
     socket.on("user connected update", (value) => {
@@ -67,6 +75,14 @@ export default function ComplainAdminPage() {
     loadUserContacts();
     messageWatcher();
     userConnectedchange();
+
+    if (messageRef.current) {
+      messageRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
     return () => {
       socket.disconnect();
     };
@@ -137,6 +153,7 @@ export default function ComplainAdminPage() {
                     message={message}
                   />
                 ))}
+                <div ref={messageRef}></div>
               </div>
               <div className={"d-flex p-2 gap-3"}>
                 <Form.Group
@@ -149,6 +166,7 @@ export default function ComplainAdminPage() {
                     placeholder="Write your message here ..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    onKeyDown={onKeyPressed}
                   />
                 </Form.Group>
                 <button className={`${styles.btnSend}`} onClick={submitHandler}>
