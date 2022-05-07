@@ -94,6 +94,7 @@ const columns = [
 ];
 
 const TransactionPage = () => {
+  document.title = "WaysBook Admin | Transaction";
   const getTransaction = async () => {
     const { data } = await API.get("/transactions/all");
 

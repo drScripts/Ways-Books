@@ -20,6 +20,7 @@ import API from "../../services";
 import { toast } from "react-toastify";
 
 const ProfilePage = () => {
+  document.title = "WaysBook | Profile";
   const [state, dispatch] = useContext(UserContext);
   const [tabs, setTabs] = useState("purchased");
   const [purchasedBooks, setPurchasedBooks] = useState([]);
@@ -36,7 +37,16 @@ const ProfilePage = () => {
 
     user?.transaction?.forEach((transaction) => {
       transaction?.transactionItems?.forEach((item) => {
-        books.push(item);
+        let isFound = false;
+        books.forEach((book) => {
+          if (book?.book?.id === item?.book?.id) {
+            isFound = true;
+          }
+        });
+
+        if (!isFound) {
+          books.push(item);
+        }
       });
     });
 

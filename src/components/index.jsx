@@ -13,6 +13,7 @@ import CustomTextArea from "./CustomTextArea";
 import CustomSelect from "./CustomSelect";
 import UserContact from "./UserContact";
 import TransactionHistoryItem from "./TransactionHistoryItem";
+import HistoryTransactionItem from "./HistoryTransactionItem";
 
 export {
   NavbarButton,
@@ -30,4 +31,5 @@ export {
   CustomSelect,
   UserContact,
   TransactionHistoryItem,
+  HistoryTransactionItem,
 };

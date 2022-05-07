@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
 const EditBookPage = () => {
+  document.title = "WaysBook Admin | Edit Book";
   const navigate = useNavigate();
   const [state, setState] = useState({
     title: "",

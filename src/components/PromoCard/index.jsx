@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import { Modal } from "react-bootstrap";
+import React, { useContext, useState } from "react";
 import NumberFormat from "react-number-format";
 import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
@@ -10,6 +11,18 @@ import styles from "./PromoCard.module.css";
 
 const PromoCard = ({ book }) => {
   const [, dispatch] = useContext(UserContext);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  const showModal = () => {
+    setShow(true);
+    setTimeout(() => {
+      setShow(false);
+    }, 2000);
+  };
 
   const postCart = async () => {
     const bodyData = JSON.stringify({ bookId: book?.id });
@@ -19,8 +32,7 @@ const PromoCard = ({ book }) => {
         "Content-Type": "application/json",
       },
     });
-
-    toast.success("Book added to cart");
+    showModal();
     dispatch({
       type: "CART_INCREMENT",
     });
@@ -65,6 +77,12 @@ const PromoCard = ({ book }) => {
           Add to Cart
         </button>
       </div>
+
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Body className={"text-success text-center"}>
+          The product is successfully added to the cart
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

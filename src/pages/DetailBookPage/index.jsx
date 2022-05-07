@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import React, { useContext, useState } from "react";
+import { Col, Container, Row, Modal } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { Navbars, HeroLayer } from "../../containers";
 import thumbnail from "../../assets/images/mock_thumbnail.jpg";
@@ -12,8 +12,18 @@ import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
 
 const DetailBookPage = () => {
+  document.title = "WaysBook | Detail Book";
   const { id } = useParams();
   const [, dispatch] = useContext(UserContext);
+  const [show, setShow] = useState(false);
+
+  const showModal = () => {
+    setShow(true);
+
+    setTimeout(() => {
+      setShow(false);
+    }, 2000);
+  };
 
   const { data } = useQuery(
     ["bookChace", id],
@@ -39,7 +49,7 @@ const DetailBookPage = () => {
         },
       });
       dispatch({ type: "CART_INCREMENT" });
-      toast.success("Item added to cart");
+      showModal();
       return data;
     },
     {
@@ -50,6 +60,10 @@ const DetailBookPage = () => {
       },
     }
   );
+
+  const handleClose = () => {
+    setShow(false);
+  };
 
   return (
     <div className={"mb-3"}>
@@ -109,6 +123,11 @@ const DetailBookPage = () => {
           </button>
         </div>
       </Container>
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Body className={"text-success text-center"}>
+          The product is successfully added to the cart
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

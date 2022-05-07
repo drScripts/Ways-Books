@@ -1,38 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Modal } from "react-bootstrap";
+import React, { useContext, useEffect } from "react";
+import { Col } from "react-bootstrap";
 import NumberFormat from "react-number-format";
-import { useMutation } from "react-query";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { ShipmentContainers } from "..";
 import { UserContext } from "../../context/UserContext";
-import API from "../../services";
-import styles from "./TransactionInformation.module.css";
+import styles from "./HistoryTransactionInformation.module.css";
 
-export default function TransactionInformation({
+export default function HistoryTransactionInformation({
   total,
   qty,
-  isCartAvailable = false,
+  transaction,
 }) {
-  const [state, dispatch] = useContext(UserContext);
-  const [show, setShow] = useState(false);
-  const [shipmentCost, setShipmentCost] = useState(0);
+  const [state] = useContext(UserContext);
 
-  const handleClose = () => {
-    setShow(false);
-  };
-
-  const createTransaction = async () => {
-    const bodyData = JSON.stringify({ shipmentCost });
-
-    const { data } = await API.post("/transaction", bodyData, {
-      headers: { "Content-Type": "application/json" },
-    });
-
-    const token = data?.data?.transaction?.paymentToken;
-    dispatch({ type: "UPDATE_CART", cartCount: 0 });
-
-    window?.snap?.pay(token, {
+  const pay = () => {
+    window?.snap?.pay(transaction?.paymentToken, {
       onSuccess: function (result) {
         console.log("success");
         console.log(result);
@@ -51,33 +31,17 @@ export default function TransactionInformation({
     });
   };
 
-  const { mutate: onSubmit } = useMutation(createTransaction, {
-    onError: (err) => {
-      const message = err?.response?.data?.message || err?.message;
-
-      toast.error(message);
-    },
-  });
-
   useEffect(() => {
     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
     const midtransClientKey = process.env.REACT_APP_MIDTRANS_CLIENT_KEY;
-
     const scriptTag = document.createElement("script");
     scriptTag.src = midtransScriptUrl;
     scriptTag.setAttribute("data-client-key", midtransClientKey);
     document.body.appendChild(scriptTag);
-
     return () => {
       document.body.removeChild(scriptTag);
     };
   }, []);
-
-  useEffect(() => {
-    if (!state?.user?.profile?.provinceId && !state?.user?.profile?.regionId) {
-      setShow(true);
-    }
-  }, [state?.user?.profile?.provinceId, state?.user?.profile?.regionId]);
 
   return (
     <>
@@ -89,20 +53,13 @@ export default function TransactionInformation({
               {state?.user?.profile?.address || "-"}
             </p>
           </div>
-          <ShipmentContainers
-            setCost={setShipmentCost}
-            userDest={state?.user?.profile?.regionId}
-            isAvailable={
-              state?.user?.profile?.provinceId && state?.user?.profile?.regionId
-            }
-          />
         </div>
         <div className={`${styles.orderReview} py-3`}>
           <div className="d-flex justify-content-between align-items center">
             <p className="m-none">Subtotal</p>
             <p className="m-none">
               <NumberFormat
-                value={total}
+                value={total - transaction?.shippingPrice}
                 thousandSeparator={"."}
                 decimalSeparator={","}
                 prefix={"Rp. "}
@@ -118,7 +75,7 @@ export default function TransactionInformation({
             <p className="m-none">Shipment Services</p>
             <p className="m-none">
               <NumberFormat
-                value={shipmentCost}
+                value={transaction?.shippingPrice}
                 thousandSeparator={"."}
                 decimalSeparator={","}
                 prefix={"Rp. "}
@@ -133,7 +90,7 @@ export default function TransactionInformation({
           <p className="m-none">Total</p>
           <p className="m-none">
             <NumberFormat
-              value={total + shipmentCost}
+              value={total}
               thousandSeparator={"."}
               decimalSeparator={","}
               prefix={"Rp. "}
@@ -143,28 +100,12 @@ export default function TransactionInformation({
         </div>
 
         <button
-          disabled={shipmentCost === 0 || !isCartAvailable}
+          disabled={transaction?.status?.toLowerCase() === "approve"}
           className={`${styles.payBtn} my-3`}
-          onClick={onSubmit}
+          onClick={pay}
         >
           Pay
         </button>
-        <Modal centered show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Announcement</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Please Update your address information due to shipment information!
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="danger" onClick={handleClose}>
-              Close
-            </Button>
-            <Link to={"/profile/edit"}>
-              <Button variant="primary">Update Profile</Button>
-            </Link>
-          </Modal.Footer>
-        </Modal>
       </Col>
     </>
   );

@@ -8,6 +8,7 @@ import {
 } from "../../containers";
 
 const CartPage = () => {
+  document.title = "WaysBook | Cart";
   const [total, setTotal] = useState(0);
   const [qty, setQty] = useState(0);
 

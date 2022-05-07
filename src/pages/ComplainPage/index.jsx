@@ -10,6 +10,7 @@ import ChatItem from "../../components/ChatItem";
 let socket;
 
 const ComplainPage = () => {
+  document.title = "WaysBook | Complain";
   const [contact, setContact] = useState({});
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");

@@ -7,6 +7,7 @@ import { HeroLayer, Navbars } from "../../containers";
 import API from "../../services";
 
 export default function PromoBooksPage() {
+  document.title = "WaysBook Admin | Promo Book";
   const [state, setState] = useState([]);
 
   const getPromoBooks = async () => {

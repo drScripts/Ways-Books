@@ -10,6 +10,7 @@ import API from "../../services";
 import { toast } from "react-toastify";
 
 export default function DetailPurchasedBookPage() {
+  document.title = "WaysBook | Detail Book";
   const { id: transactionId, bookId } = useParams();
 
   const getPurchasedBook = async () => {

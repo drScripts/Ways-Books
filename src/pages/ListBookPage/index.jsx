@@ -19,6 +19,7 @@ createTheme("light", {
 });
 
 const ListBookPage = () => {
+  document.title = "WaysBook Admin | List Book";
   const getBooks = async () => {
     const { data } = await API.get("/books/admin");
     return data?.data?.books;

@@ -9,7 +9,7 @@ export default function TransactionHistoryItem({ transaction }) {
     ?.join(", ");
 
   return (
-    <Link to={"/profile"} className={"text-dark"}>
+    <Link to={`/transaction/${transaction?.id}`} className={"text-dark"}>
       <Card className="shadow shadow-sm rounded-3 mb-3">
         <Card.Body>
           <h4>

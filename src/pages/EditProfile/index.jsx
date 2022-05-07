@@ -14,20 +14,22 @@ import API from "../../services";
 import { toast } from "react-toastify";
 
 export default function EditProfile() {
+  document.title = "WaysBook | Edit Profile";
   const [state, dispatch] = useContext(UserContext);
   const [form, setForm] = useState({
     name: "",
     address: "",
     phoneNumber: "",
-    profilePict: "",
-    provinceId: "",
+    fileUrl: "",
+    file: {},
     cityId: "",
-    provinceValueObj: null,
-    cityValueObj: null,
+    provinceId: "",
     gender: "",
   });
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
+  const [provinceValue, setProvinceValue] = useState({});
+  const [citiesValue, setCitiesValue] = useState({});
 
   useEffect(() => {
     if (state?.user) {
@@ -64,12 +66,9 @@ export default function EditProfile() {
     const { data } = await API.get("/shipment/province");
     const mappedData = data?.data?.province?.map((province) => {
       if (form?.provinceId === province?.idraja) {
-        setForm({
-          ...form,
-          provinceValueObj: {
-            value: province?.idraja,
-            label: province?.name,
-          },
+        setProvinceValue({
+          value: province?.idraja,
+          label: province?.name,
         });
       }
 
@@ -114,12 +113,9 @@ export default function EditProfile() {
     if (form?.cityId) {
       cities?.forEach((city) => {
         if (parseInt(city?.value) === parseInt(form?.cityId)) {
-          setForm({
-            ...form,
-            cityValueObj: {
-              value: city.value,
-              label: city.label,
-            },
+          setCitiesValue({
+            value: city.value,
+            label: city.label,
           });
         }
       });
@@ -131,12 +127,9 @@ export default function EditProfile() {
     if (form?.provinceId) {
       provinces?.forEach((province) => {
         if (parseInt(province?.value) === parseInt(form?.provinceId)) {
-          setForm({
-            ...form,
-            provinceValueObj: {
-              value: province.value,
-              label: province.label,
-            },
+          setProvinceValue({
+            value: province.value,
+            label: province.label,
           });
         }
       });
@@ -240,7 +233,7 @@ export default function EditProfile() {
             className={"mt-3"}
             onChange={onSelectChange}
             name={"provinceId"}
-            value={form?.provinceValueObj}
+            value={provinceValue}
           />
           <CustomSelect
             options={cities}
@@ -248,7 +241,7 @@ export default function EditProfile() {
             className={"mt-3"}
             onChange={onSelectChange}
             name={"cityId"}
-            value={form?.cityValueObj}
+            value={citiesValue}
           />
           <CustomTextArea
             name={"address"}

@@ -1,0 +1,23 @@
+.price {
+  color: #44b200;
+  font-weight: bold;
+}
+
+.payBtn {
+  width: 100%;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  background-color: #393939;
+  padding: 10px;
+}
+
+.address {
+  text-align: justify;
+}
+
+.topBorder {
+  border-top: 1px solid #393939;
+  padding: 0;
+}

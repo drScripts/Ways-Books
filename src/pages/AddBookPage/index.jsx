@@ -11,6 +11,8 @@ import API from "../../services";
 import { useNavigate } from "react-router-dom";
 
 const AddBookPage = () => {
+  document.title = "WaysBook Admin | Add Book";
+
   const navigate = useNavigate();
   const [state, setState] = useState({
     title: "",

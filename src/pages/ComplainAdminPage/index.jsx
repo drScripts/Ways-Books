@@ -11,6 +11,7 @@ import ChatItem from "../../components/ChatItem";
 let socket;
 
 export default function ComplainAdminPage() {
+  document.title = "WaysBook Admin | Complain";
   const [contact, setContact] = useState({});
   const [contacts, setContacts] = useState([]);
   const [messages, setMessages] = useState([]);

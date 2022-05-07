@@ -1,6 +1,7 @@
 import { Navbars, HeroLayer, BookList, PromoBookList } from "../../containers";
 
 const LandingPage = () => {
+  document.title = "WaysBook | Home";
   return (
     <div>
       <Navbars />
