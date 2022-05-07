@@ -63,6 +63,8 @@ export default function ShipmentContainers({
     if (value?.name === "shipmentType") {
       setCost(value?.value);
     } else {
+      setCost(0);
+      setShipment([]);
       mutate(value?.value);
     }
   };

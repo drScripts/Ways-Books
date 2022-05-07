@@ -15,10 +15,40 @@ import phone from "../../assets/icons/phone.png";
 import marker from "../../assets/icons/place.png";
 import profile from "../../assets/images/profile.jpg";
 import { UserContext } from "../../context/UserContext";
+import { useQuery } from "react-query";
+import API from "../../services";
+import { toast } from "react-toastify";
 
 const ProfilePage = () => {
-  const [state] = useContext(UserContext);
+  const [state, dispatch] = useContext(UserContext);
   const [tabs, setTabs] = useState("purchased");
+  const [purchasedBooks, setPurchasedBooks] = useState([]);
+
+  const getProfile = async () => {
+    const { data } = await API.get("/profile");
+    const user = data?.data?.user;
+    dispatch({
+      type: "USER_UPDATE",
+      payload: { user },
+    });
+
+    const books = [];
+
+    user?.transaction?.forEach((transaction) => {
+      transaction?.transactionItems?.forEach((item) => {
+        books.push(item);
+      });
+    });
+
+    setPurchasedBooks(books);
+  };
+
+  useQuery("profileChace", getProfile, {
+    onError: (err) => {
+      const message = err?.response?.data?.message || err?.message;
+      toast.error(message);
+    },
+  });
 
   return (
     <div>
@@ -67,7 +97,7 @@ const ProfilePage = () => {
           </Card.Body>
         </Card>
         <ProfileHistoryTab onChange={setTabs} className={"my-3"} />
-        <ProfileTabController tabName={tabs} />
+        <ProfileTabController tabName={tabs} purchasedBook={purchasedBooks} />
       </Container>
     </div>
   );

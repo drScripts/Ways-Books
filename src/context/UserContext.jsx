@@ -32,6 +32,7 @@ const reducer = (state, action) => {
       };
     case "USER_LOGOUT":
       localStorage.removeItem("usrtkn");
+      localStorage.removeItem("path");
       setAuthToken(null);
       return {
         user: null,

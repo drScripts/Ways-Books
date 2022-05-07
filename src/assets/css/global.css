@@ -96,3 +96,15 @@ a {
 .mPoint {
   cursor: pointer;
 }
+
+.customBtn {
+  background-color: #393939;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  font-weight: 500;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}

@@ -50,7 +50,7 @@ const Navbars = ({ isAdmin = false }) => {
             {state?.isLogin ? (
               <>
                 {state?.user?.role !== "admin" && (
-                  <Link to={"/cart"} className={`${styles.wrapper}`}>
+                  <Link to={"/cart"} className={`${styles.wrapper} me-1`}>
                     <div>
                       <img
                         src={cartLogo}
@@ -58,9 +58,11 @@ const Navbars = ({ isAdmin = false }) => {
                         width={35}
                         height={35}
                       />
-                      <Badge bg="" pill className={styles.cartCount}>
-                        {state.cart > 9 ? "+9" : state?.cart}
-                      </Badge>
+                      {state?.cart > 0 && (
+                        <Badge bg="" pill className={styles.cartCount}>
+                          {state.cart > 9 ? "+9" : state?.cart}
+                        </Badge>
+                      )}
                     </div>
                   </Link>
                 )}

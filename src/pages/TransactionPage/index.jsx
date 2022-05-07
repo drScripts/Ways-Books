@@ -3,6 +3,9 @@ import { Container } from "react-bootstrap";
 import { Navbars, HeroLayer } from "../../containers";
 import DataTable, { createTheme } from "react-data-table-component";
 import NumberFormat from "react-number-format";
+import { useQuery } from "react-query";
+import API from "../../services";
+import { toast } from "react-toastify";
 
 createTheme("light", {
   background: {
@@ -33,13 +36,15 @@ const columns = [
     sortable: true,
     conditionalCellStyles: [
       {
-        when: (row) => row.status === "Approve",
+        when: (row) => row.status?.toLowerCase() === "approve",
         style: {
           color: "#0ACF83",
         },
       },
       {
-        when: (row) => row.status === "Cancel" || row.status === "Pending",
+        when: (row) =>
+          row.status?.toLowerCase() === "cancel" ||
+          row.status?.toLowerCase() === "pending",
         style: {
           color: "#FF0742",
         },
@@ -63,19 +68,19 @@ const columns = [
     selector: (row) => row.status,
     conditionalCellStyles: [
       {
-        when: (row) => row.status === "Approve",
+        when: (row) => row.status?.toLowerCase() === "approve",
         style: {
           color: "#0ACF83",
         },
       },
       {
-        when: (row) => row.status === "Cancel",
+        when: (row) => row.status?.toLowerCase() === "cancel",
         style: {
           color: "#FF0742",
         },
       },
       {
-        when: (row) => row.status === "Pending",
+        when: (row) => row.status?.toLowerCase() === "pending",
         style: {
           color: "#F7941E",
         },
@@ -83,54 +88,43 @@ const columns = [
     ],
     style: {
       fontWeight: "bold",
+      textTransform: "capitalize",
     },
   },
 ];
 
-const data = [
-  {
-    no: 1,
-    id: 1,
-    user: "Beetlejuice",
-    book: "My Own Private Mr. Cool",
-    total: 75000,
-    status: "Approve",
-  },
-  {
-    no: 2,
-    id: 2,
-    user: "Ghostbusters",
-    book: "Garis Waktu : Sebuah Perjalanan",
-    total: 49000,
-    status: "Approve",
-  },
-  {
-    no: 3,
-    id: 3,
-    user: "Amin Subagiyo",
-    book: "Ayahku (Bukan) Pembohong",
-    total: 130000,
-    status: "Cancel",
-  },
-  {
-    no: 4,
-    id: 4,
-    user: "Haris Astina",
-    book: "Panduan Resmi Tes Cpns Cat 2019 / 2020",
-    total: 184000,
-    status: "Pending",
-  },
-  {
-    no: 5,
-    id: 5,
-    user: "Haris Astina",
-    book: "Panduan Resmi Tes Cpns Cat 2019 / 2020",
-    total: 184000,
-    status: "Pending",
-  },
-];
-
 const TransactionPage = () => {
+  const getTransaction = async () => {
+    const { data } = await API.get("/transactions/all");
+
+    const transactions = data?.data?.transactions;
+
+    let no = 1;
+    const mappedTransaction = transactions?.map((transaction) => {
+      let booksName = "";
+
+      transaction?.transactionItems?.forEach((item) => {
+        booksName += item?.book?.title + ", ";
+      });
+
+      return {
+        no: no++,
+        id: transaction?.id,
+        user: transaction?.user?.name,
+        book: booksName,
+        total: transaction?.total,
+        status: transaction?.status,
+      };
+    });
+    return mappedTransaction;
+  };
+  const { data } = useQuery("transactionChace", getTransaction, {
+    onError: (err) => {
+      const message = err?.response?.data?.message || err?.message;
+      toast.error(message);
+    },
+  });
+
   return (
     <div>
       <Navbars isAdmin />

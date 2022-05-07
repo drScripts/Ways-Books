@@ -9,6 +9,9 @@ import CartPage from "./CartPage";
 import EditProfile from "./EditProfile";
 import ComplainAdminPage from "./ComplainAdminPage";
 import HistoryTransactionPage from "./HistoryTransactionPage";
+import EditBookPage from "./EditBookPage";
+import PromoBooksPage from "./PromoBooksPage";
+import DetailPurchasedBookPage from "./DetailPurchasedBookPage";
 
 export {
   LandingPage,
@@ -22,4 +25,7 @@ export {
   EditProfile,
   ComplainAdminPage,
   HistoryTransactionPage,
+  EditBookPage,
+  PromoBooksPage,
+  DetailPurchasedBookPage,
 };

@@ -6,8 +6,9 @@ export default function CustomSelect({
   placeHolder,
   className,
   onChange,
-  name,
+  name = "select",
   value,
+  isMulti = false,
 }) {
   const customStyles = {
     control: (provided, state) => ({
@@ -16,10 +17,18 @@ export default function CustomSelect({
       border: "2px solid #bcbcbc ",
       color: "#333333",
     }),
+    multiValue: (provided, state) => ({
+      ...provided,
+      backgroundColor: "white",
+    }),
   };
 
-  const onChangeHandler = ({ value }) => {
-    onChange({ name, value });
+  const onChangeHandler = (data) => {
+    if (isMulti) {
+      onChange(data);
+    } else {
+      onChange({ name, value: data?.value });
+    }
   };
 
   return (
@@ -30,6 +39,7 @@ export default function CustomSelect({
       styles={customStyles}
       onChange={onChangeHandler}
       value={value}
+      isMulti={isMulti}
     />
   );
 }

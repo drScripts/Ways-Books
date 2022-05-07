@@ -147,7 +147,7 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
           <p className="text-center">
             Don't have an account ? Klik{" "}
             <span
-              className="text-decoration-none fw-bold"
+              className="text-decoration-none fw-bold mPoint"
               onClick={() => {
                 clearState();
                 changeForm({ type: false });
@@ -160,7 +160,7 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
           <p className="text-center">
             Already have an account ? Klik{" "}
             <span
-              className="text-decoration-none fw-bold"
+              className="text-decoration-none fw-bold mPoint"
               onClick={() => {
                 clearState();
                 changeForm({ type: true });

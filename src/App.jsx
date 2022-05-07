@@ -16,6 +16,9 @@ import {
   EditProfile,
   ComplainAdminPage,
   HistoryTransactionPage,
+  EditBookPage,
+  PromoBooksPage,
+  DetailPurchasedBookPage,
 } from "./pages";
 import API, { setAuthToken } from "./services";
 
@@ -66,15 +69,18 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path={"/profile/edit"} element={<EditProfile />} />
         <Route
-          path="/history-transaction"
-          element={<HistoryTransactionPage />}
+          path="/transaction/:id/book/:bookId"
+          element={<DetailPurchasedBookPage />}
         />
+        <Route path="/transaction/:id" element={<HistoryTransactionPage />} />
       </Route>
       <Route path="/admin" element={<AdminMiddleware />}>
         <Route index element={<TransactionPage />} />
         <Route path="/admin/complain" element={<ComplainAdminPage />} />
         <Route path="/admin/books" element={<ListBookPage />} />
+        <Route path="/admin/books/promo" element={<PromoBooksPage />} />
         <Route path="/admin/add-book" element={<AddBookPage />} />
+        <Route path="/admin/book/:id" element={<EditBookPage />} />
       </Route>
     </Routes>
   );

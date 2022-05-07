@@ -8,6 +8,7 @@ import ShipmentContainers from "./ShipmentContainers";
 import ProfileHistoryTab from "./ProfileHistoryTab";
 import TransactionHistory from "./TransactionHistory";
 import ProfileTabController from "./ProfilleTabController";
+import PromoBookList from "./PromoBookList";
 
 export {
   Navbars,
@@ -20,4 +21,5 @@ export {
   ProfileHistoryTab,
   TransactionHistory,
   ProfileTabController,
+  PromoBookList,
 };

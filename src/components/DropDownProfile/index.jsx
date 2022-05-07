@@ -7,6 +7,7 @@ import complain from "../../assets/icons/complain.png";
 import logout from "../../assets/icons/logout.png";
 import addBook from "../../assets/icons/add-book.png";
 import listBook from "../../assets/icons/list-book.png";
+import promo from "../../assets/icons/promo.png";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
@@ -36,6 +37,13 @@ const DropdownItemAdmin = () => {
       >
         <img src={addBook} alt="Add Books" width={20} height={20} />
         Add Book
+      </Link>
+      <Link
+        to={"/admin/books/promo"}
+        className={"align-items-center d-flex gap-2 mt-2"}
+      >
+        <img src={promo} alt="promo Books" width={20} height={20} />
+        Promo Books
       </Link>
       <Link
         to={"/admin/complain"}
@@ -90,7 +98,7 @@ const DropDownProfile = ({ isAdmin }) => {
         {isAdmin ? <DropdownItemAdmin /> : <DropdownItem />}
         <Dropdown.Divider />
         <div
-          className={"align-items-center d-flex gap-2 px-3"}
+          className={"align-items-center d-flex gap-2 px-3 mPoint"}
           onClick={logoutHandler}
         >
           <img src={logout} alt="Logout" width={20} height={20} />

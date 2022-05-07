@@ -1,6 +1,4 @@
-import { Navbars, HeroLayer, BookList } from "../../containers";
-import { PromoCard } from "../../components";
-import styles from "./LandingPage.module.css";
+import { Navbars, HeroLayer, BookList, PromoBookList } from "../../containers";
 
 const LandingPage = () => {
   return (
@@ -12,12 +10,7 @@ const LandingPage = () => {
         same time
       </h1>
 
-      <div className={`${styles.promo} mt-5`}>
-        <PromoCard />
-        <PromoCard />
-        <PromoCard />
-        <PromoCard />
-      </div>
+      <PromoBookList />
       <BookList />
     </div>
   );

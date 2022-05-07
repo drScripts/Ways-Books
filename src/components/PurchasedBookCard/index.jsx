@@ -4,25 +4,22 @@ import thumbnail from "../../assets/images/mock_thumbnail.jpg";
 import { Link } from "react-router-dom";
 import { Col } from "react-bootstrap";
 
-const PurchasedBookCard = () => {
+const PurchasedBookCard = ({ book, item }) => {
   return (
     <Col className="mb-3">
-      <Link to={"/book/2"} className="text-decoration-none">
+      <Link
+        to={`/transaction/${item?.idTransaction}/book/${book?.id}`}
+        className="text-decoration-none"
+      >
         <img
-          src={thumbnail}
+          src={book?.thumbnail || thumbnail}
           alt="Thumbnail"
           className={`${styles.thumbnail} smallRadius`}
         />
-        <h4 className={`text-dark ellipsis`}>My Own Private Mr. Cool</h4>
-        <p className={styles.author}>By. Indah Hanaco</p>
+        <h4 className={`text-dark ellipsis`}>{book?.title}</h4>
+        <p className={styles.author}>By. {book?.author}</p>
       </Link>
-      <a
-        href={
-          "http://badanbahasa.kemdikbud.go.id/lamanbahasa/sites/default/files/SD-Gatotkaca%20Satria%20dari%20Pringgadani.pdf"
-        }
-        target={"_blank"}
-        rel="noreferrer"
-      >
+      <a href={book?.bookAttachment} target={"_blank"} rel="noreferrer">
         <button className={styles.downloadBtn}>Download</button>
       </a>
     </Col>

@@ -12,7 +12,7 @@ const BookCard = ({ src, title, author, price, id }) => {
         <img
           src={src || thumbnail}
           alt="Thumbnail"
-          className={`${styles.thumbnail} smallRadius`}
+          className={`${styles.thumbnail} smallRadius shadow mb-2`}
         />
         <h4 className={`text-dark ellipsis`}>{title}</h4>
         <p className={styles.author}>By. {author}</p>

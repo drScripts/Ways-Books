@@ -6,7 +6,7 @@ export default function ChatItem({ message, isCurrent = false }) {
   return (
     <div className={`${isCurrent ? styles.right : ""}`}>
       <Card className={`${styles.messages}`}>
-        <Card.Body>{message?.message}</Card.Body>
+        <Card.Body className="text-break">{message?.message}</Card.Body>
       </Card>
     </div>
   );
