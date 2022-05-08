@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import API from "../../services";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
+import LoadingApp from "../LoadingApp";
 
 export default function CartList({ setCount, setTotal }) {
   const [, dispatch] = useContext(UserContext);
@@ -15,7 +16,7 @@ export default function CartList({ setCount, setTotal }) {
     return data?.data?.carts;
   };
 
-  const { data, refetch } = useQuery(["cartsChace"], getCarts, {
+  const { data, refetch, isLoading } = useQuery(["cartsChace"], getCarts, {
     onError: (err) => {
       const message = err?.response?.data?.message || err?.message;
       toast.error(message);
@@ -40,22 +41,25 @@ export default function CartList({ setCount, setTotal }) {
   }, [data, setCount, setTotal, dispatch]);
 
   return (
-    <Col md={"8"}>
-      <h5 className={"mx-0"}>Review My Order</h5>
-      <div className={`${styles.orderReview}`}>
-        {data?.map((cart) => {
-          return (
-            <CartItem
-              countItem={cart?.qty}
-              book={cart?.book}
-              key={cart?.id}
-              id={cart?.id}
-              refreshData={refetch}
-              cart={cart}
-            />
-          );
-        })}
-      </div>
-    </Col>
+    <>
+      <LoadingApp isLoading={isLoading} />
+      <Col md={"8"}>
+        <h5 className={"mx-0"}>Review My Order</h5>
+        <div className={`${styles.orderReview}`}>
+          {data?.map((cart) => {
+            return (
+              <CartItem
+                countItem={cart?.qty}
+                book={cart?.book}
+                key={cart?.id}
+                id={cart?.id}
+                refreshData={refetch}
+                cart={cart}
+              />
+            );
+          })}
+        </div>
+      </Col>
+    </>
   );
 }

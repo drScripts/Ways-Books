@@ -4,6 +4,7 @@ import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 import { CustomSelect } from "../../components";
 import API from "../../services";
+import LoadingApp from "../LoadingApp";
 
 const shipmentServices = [
   {
@@ -52,7 +53,7 @@ export default function ShipmentContainers({
     }
   };
 
-  const { mutate } = useMutation(getShipmentCost, {
+  const { mutate, isLoading } = useMutation(getShipmentCost, {
     onError: (err) => {
       const message = err?.response?.data?.message || err?.message;
       toast.error(message);
@@ -72,6 +73,7 @@ export default function ShipmentContainers({
   if (isAvailable) {
     return (
       <div>
+        <LoadingApp isLoading={isLoading} />
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label className="fw-bold">Shipment Services</Form.Label>

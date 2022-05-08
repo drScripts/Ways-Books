@@ -10,6 +10,7 @@ import TransactionHistory from "./TransactionHistory";
 import ProfileTabController from "./ProfilleTabController";
 import PromoBookList from "./PromoBookList";
 import HistoryTransactionInformation from "./HistoryTransactionInformation";
+import LoadingApp from "./LoadingApp";
 
 export {
   Navbars,
@@ -24,4 +25,5 @@ export {
   ProfileTabController,
   PromoBookList,
   HistoryTransactionInformation,
+  LoadingApp,
 };

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Container, Form } from "react-bootstrap";
-import { Navbars, HeroLayer } from "../../containers";
+import { Navbars, HeroLayer, LoadingApp } from "../../containers";
 import { InputFileButton } from "../../components";
 import NumberFormat from "react-number-format";
 import attachment from "../../assets/icons/attachment.png";
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const AddBookPage = () => {
   document.title = "WaysBook Admin | Add Book";
-
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [state, setState] = useState({
     title: "",
@@ -45,6 +45,7 @@ const AddBookPage = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formBody = new FormData();
 
     const newPrice = parseInt(state?.price?.split("Rp. ")[1].replace(".", ""));
@@ -85,18 +86,21 @@ const AddBookPage = () => {
         (err) => err?.response
       );
 
+      setIsLoading(false);
       if (status !== 201) {
         toast.error(data?.message);
       } else {
         navigate("/admin/books");
       }
     } else {
+      setIsLoading(false);
       toast.error("Please fill all form!");
     }
   };
 
   return (
     <div>
+      <LoadingApp isLoading={isLoading} />
       <Navbars isAdmin />
       <HeroLayer />
       <Container className={"px-md-5 my-5"}>

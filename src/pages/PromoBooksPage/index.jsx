@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import { useMutation, useQuery } from "react-query";
 import { toast } from "react-toastify";
 import { CustomSelect } from "../../components";
-import { HeroLayer, Navbars } from "../../containers";
+import { HeroLayer, LoadingApp, Navbars } from "../../containers";
 import API from "../../services";
 
 export default function PromoBooksPage() {
@@ -32,19 +32,27 @@ export default function PromoBooksPage() {
     return mappedBooks;
   };
 
-  const { data: value, refetch } = useQuery("promoChace", getPromoBooks, {
+  const {
+    data: value,
+    refetch,
+    isLoading: promoLoading,
+  } = useQuery("promoChace", getPromoBooks, {
     onError: (err) => {
       const message = err?.response?.data?.message || err?.message;
       toast.error(message);
     },
   });
 
-  const { data: options } = useQuery("booksChace", getBooks, {
-    onError: (err) => {
-      const message = err?.response?.data?.message || err?.message;
-      toast.error(message);
-    },
-  });
+  const { data: options, isLoading: bookLoading } = useQuery(
+    "booksChace",
+    getBooks,
+    {
+      onError: (err) => {
+        const message = err?.response?.data?.message || err?.message;
+        toast.error(message);
+      },
+    }
+  );
 
   const onSelectChange = (value) => {
     setState(value);
@@ -64,7 +72,7 @@ export default function PromoBooksPage() {
     return data;
   };
 
-  const { mutate: onSubmit } = useMutation(updatePromo, {
+  const { mutate: onSubmit, isLoading } = useMutation(updatePromo, {
     onError: (err) => {
       const message = err?.response?.data?.message || err?.message;
 
@@ -80,6 +88,7 @@ export default function PromoBooksPage() {
 
   return (
     <div>
+      <LoadingApp isLoading={isLoading || bookLoading || promoLoading} />
       <Navbars isAdmin />
       <HeroLayer />
       <Container>

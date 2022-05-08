@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { Navbars, HeroLayer } from "../../containers";
+import { Navbars, HeroLayer, LoadingApp } from "../../containers";
 import DataTable, { createTheme } from "react-data-table-component";
 import NumberFormat from "react-number-format";
 import { useQuery } from "react-query";
@@ -119,7 +119,7 @@ const TransactionPage = () => {
     });
     return mappedTransaction;
   };
-  const { data } = useQuery("transactionChace", getTransaction, {
+  const { data, isLoading } = useQuery("transactionChace", getTransaction, {
     onError: (err) => {
       const message = err?.response?.data?.message || err?.message;
       toast.error(message);
@@ -128,6 +128,7 @@ const TransactionPage = () => {
 
   return (
     <div>
+      <LoadingApp isLoading={isLoading} />
       <Navbars isAdmin />
       <HeroLayer />
       <Container className={"px-md-5 mt-5"}>

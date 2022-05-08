@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
-import { Navbars, HeroLayer } from "../../containers";
+import { Navbars, HeroLayer, LoadingApp } from "../../containers";
 import { InputFileButton } from "../../components";
 import NumberFormat from "react-number-format";
 import attachment from "../../assets/icons/attachment.png";
@@ -28,13 +28,14 @@ const EditBookPage = () => {
     author: "",
   });
   const [publicationType, setPublicationType] = useState("text");
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
 
   const getBook = async () => {
     const { data } = await API.get(`/book/${id}`);
     return data?.data?.book;
   };
-  const { data } = useQuery("bookChace", getBook);
+  const { data, isLoading: bookLoading } = useQuery("bookChace", getBook);
 
   const onChangeHandler = (e) => {
     setState({
@@ -53,6 +54,7 @@ const EditBookPage = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formBody = new FormData();
 
     const {
@@ -88,6 +90,7 @@ const EditBookPage = () => {
       (err) => err?.response
     );
 
+    setIsLoading(false);
     if (status !== 201) {
       toast.error(data?.message);
     } else {
@@ -117,6 +120,7 @@ const EditBookPage = () => {
 
   return (
     <div>
+      <LoadingApp isLoading={bookLoading || isLoading} />
       <Navbars isAdmin />
       <HeroLayer />
       <Container className={"px-md-5 my-5"}>

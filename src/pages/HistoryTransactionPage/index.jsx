@@ -7,6 +7,7 @@ import { HistoryTransactionItem } from "../../components";
 import {
   HeroLayer,
   HistoryTransactionInformation,
+  LoadingApp,
   Navbars,
 } from "../../containers";
 import API from "../../services";
@@ -30,7 +31,7 @@ export default function HistoryTransactionPage() {
     return transaction;
   };
 
-  const { data } = useQuery("transactionChace", getTransaction, {
+  const { data, isLoading } = useQuery("transactionChace", getTransaction, {
     onError: (err) => {
       const message = err?.response?.data?.message || err?.message;
       toast.error(message);
@@ -39,6 +40,7 @@ export default function HistoryTransactionPage() {
 
   return (
     <div>
+      <LoadingApp isLoading={isLoading} />
       <Navbars />
       <HeroLayer />
       <Container className={"px-md-5 my-3 my-sm-5"}>

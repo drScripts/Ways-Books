@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
-import { Navbars, HeroLayer } from "../../containers";
+import { Navbars, HeroLayer, LoadingApp } from "../../containers";
 import DataTable, { createTheme } from "react-data-table-component";
 import NumberFormat from "react-number-format";
 import { Thumbnailtable, TableDescription } from "../../components";
@@ -25,7 +25,7 @@ const ListBookPage = () => {
     return data?.data?.books;
   };
 
-  const { data, refetch } = useQuery("booksChace", getBooks);
+  const { data, refetch, isLoading } = useQuery("booksChace", getBooks);
 
   const columns = [
     {
@@ -117,6 +117,7 @@ const ListBookPage = () => {
 
   return (
     <div>
+      <LoadingApp isLoading={isLoading} />
       <Navbars isAdmin />
       <HeroLayer />
       <Container className={"my-5"}>

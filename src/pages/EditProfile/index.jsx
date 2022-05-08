@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
-import { HeroLayer, Navbars } from "../../containers";
+import { HeroLayer, LoadingApp, Navbars } from "../../containers";
 import {
   CustomForm,
   CustomTextArea,
@@ -30,6 +30,7 @@ export default function EditProfile() {
   const [cities, setCities] = useState([]);
   const [provinceValue, setProvinceValue] = useState({});
   const [citiesValue, setCitiesValue] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (state?.user) {
@@ -97,10 +98,17 @@ export default function EditProfile() {
     return mappedData;
   };
 
-  useQuery(["provincesChace"], getProvince);
-  useQuery(["citiesChace", form?.provinceId], getCities, {
-    enabled: !!form?.provinceId,
-  });
+  const { isLoading: provinceLoading } = useQuery(
+    ["provincesChace"],
+    getProvince
+  );
+  const { isLoading: citiesLoading } = useQuery(
+    ["citiesChace", form?.provinceId],
+    getCities,
+    {
+      enabled: !!form?.provinceId,
+    }
+  );
 
   const onSelectChange = (e) => {
     setForm({
@@ -139,6 +147,7 @@ export default function EditProfile() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formBody = new FormData();
 
     const { address, cityId, name, phoneNumber, file, provinceId, gender } =
@@ -159,6 +168,8 @@ export default function EditProfile() {
     );
 
     if (status !== 201) {
+      console.log("hai");
+      setIsLoading(false);
       toast.error(data?.message);
     } else {
       toast.success("Success Update Data");
@@ -167,10 +178,12 @@ export default function EditProfile() {
         payload: { user: data?.data?.user },
       });
     }
+    setIsLoading(false);
   };
 
   return (
     <div>
+      <LoadingApp isLoading={provinceLoading || citiesLoading || isLoading} />
       <Navbars />
       <HeroLayer />
       <Container className="mt-5">

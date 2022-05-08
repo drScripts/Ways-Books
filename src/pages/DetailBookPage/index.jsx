@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Col, Container, Row, Modal } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { Navbars, HeroLayer } from "../../containers";
+import { Navbars, HeroLayer, LoadingApp } from "../../containers";
 import thumbnail from "../../assets/images/mock_thumbnail.jpg";
 import styles from "./DetailBookPage.module.css";
 import whiteCart from "../../assets/icons/white-cart.png";
@@ -25,7 +25,7 @@ const DetailBookPage = () => {
     }, 2000);
   };
 
-  const { data } = useQuery(
+  const { data, isLoading: bookLoading } = useQuery(
     ["bookChace", id],
     async () => {
       const { data } = await API.get(`/book/${id}`);
@@ -40,7 +40,7 @@ const DetailBookPage = () => {
     }
   );
 
-  const { mutate: addToCart } = useMutation(
+  const { mutate: addToCart, isLoading } = useMutation(
     async () => {
       const bodyData = JSON.stringify({ bookId: id });
       const { data } = await API.post("/cart", bodyData, {
@@ -67,6 +67,7 @@ const DetailBookPage = () => {
 
   return (
     <div className={"mb-3"}>
+      <LoadingApp isLoading={bookLoading || isLoading} />
       <Navbars />
       <HeroLayer />
       <Container className={"px-md-5 mt-5"}>

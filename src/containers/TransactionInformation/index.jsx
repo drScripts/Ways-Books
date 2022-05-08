@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { ShipmentContainers } from "..";
 import { UserContext } from "../../context/UserContext";
 import API from "../../services";
+import LoadingApp from "../LoadingApp";
 import styles from "./TransactionInformation.module.css";
 
 export default function TransactionInformation({
@@ -51,7 +52,7 @@ export default function TransactionInformation({
     });
   };
 
-  const { mutate: onSubmit } = useMutation(createTransaction, {
+  const { mutate: onSubmit, isLoading } = useMutation(createTransaction, {
     onError: (err) => {
       const message = err?.response?.data?.message || err?.message;
 
@@ -81,6 +82,7 @@ export default function TransactionInformation({
 
   return (
     <>
+      <LoadingApp isLoading={isLoading} />
       <Col md={4} className={`ps-md-4`}>
         <div className={"m-none mt-2 mt-sm-0"}>
           <h5 className="mx-0 mb-3 mb-sm-2">Shipment Address</h5>

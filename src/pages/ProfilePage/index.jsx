@@ -5,6 +5,7 @@ import {
   HeroLayer,
   ProfileHistoryTab,
   ProfileTabController,
+  LoadingApp,
 } from "../../containers";
 import { ProfileItem } from "../../components";
 import { Link } from "react-router-dom";
@@ -53,7 +54,7 @@ const ProfilePage = () => {
     setPurchasedBooks(books);
   };
 
-  useQuery("profileChace", getProfile, {
+  const { isLoading } = useQuery("profileChace", getProfile, {
     onError: (err) => {
       const message = err?.response?.data?.message || err?.message;
       toast.error(message);
@@ -62,6 +63,7 @@ const ProfilePage = () => {
 
   return (
     <div>
+      <LoadingApp isLoading={isLoading} />
       <Navbars />
       <HeroLayer />
       <Container className={"px-md-5 mt-5"}>

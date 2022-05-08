@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { HeroLayer, Navbars } from "../../containers";
+import { HeroLayer, LoadingApp, Navbars } from "../../containers";
 import thumbnail from "../../assets/images/mock_thumbnail.jpg";
 import styles from "./DetailPurchasedBookPage.module.css";
 import NumberFormat from "react-number-format";
@@ -20,7 +20,7 @@ export default function DetailPurchasedBookPage() {
 
     return data?.data?.book;
   };
-  const { data } = useQuery("detailBookChace", getPurchasedBook, {
+  const { data, isLoading } = useQuery("detailBookChace", getPurchasedBook, {
     onError: (err) => {
       const message = err?.response?.data?.message || err?.message;
 
@@ -30,6 +30,7 @@ export default function DetailPurchasedBookPage() {
 
   return (
     <div>
+      <LoadingApp isLoading={isLoading} />
       <Navbars />
       <HeroLayer />
       <Container className={"px-md-5 mt-5"}>

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
 import API from "../../services";
 import styles from "./ModalForm.module.css";
+import LoadingApp from "../LoadingApp";
 
 const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
   const [state, setState] = useState({
@@ -15,7 +16,7 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
 
   const [, dispatch] = useContext(UserContext);
 
-  const { mutate: register } = useMutation(
+  const { mutate: register, isLoading: loadingRegister } = useMutation(
     async () => {
       const { full_name, email, password } = state;
 
@@ -45,7 +46,7 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
     }
   );
 
-  const { mutate: login } = useMutation(
+  const { mutate: login, isLoading: loadingLogin } = useMutation(
     async () => {
       const { email, password } = state;
 
@@ -84,6 +85,7 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    localStorage.removeItem("path");
     if (isLogin) {
       login();
     } else {
@@ -96,82 +98,85 @@ const ModalForm = ({ show, handleClose, isLogin, changeForm }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
-      <Modal.Header className="border-0">
-        <Modal.Title>{isLogin ? "Login" : "Register"}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={onSubmit}>
-          {!isLogin && (
+    <>
+      <LoadingApp isLoading={loadingRegister || loadingLogin} />
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header className="border-0">
+          <Modal.Title>{isLogin ? "Login" : "Register"}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={onSubmit}>
+            {!isLogin && (
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="text"
+                  placeholder="Full Name"
+                  className={styles.customForm}
+                  required
+                  onChange={onChange}
+                  name="full_name"
+                  value={state?.full_name}
+                />
+              </Form.Group>
+            )}
+
             <Form.Group className="mb-3">
               <Form.Control
-                type="text"
-                placeholder="Full Name"
+                type="email"
+                placeholder="Email"
                 className={styles.customForm}
                 required
                 onChange={onChange}
-                name="full_name"
-                value={state?.full_name}
+                name="email"
+                value={state?.email}
               />
             </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                className={styles.customForm}
+                required
+                onChange={onChange}
+                name="password"
+                value={state?.password}
+              />
+            </Form.Group>
+            <button className={`${styles.formButton} mt-3 mb-2`}>
+              {isLogin ? "Login" : "Register"}{" "}
+            </button>
+          </Form>
+
+          {isLogin ? (
+            <p className="text-center">
+              Don't have an account ? Klik{" "}
+              <span
+                className="text-decoration-none fw-bold mPoint"
+                onClick={() => {
+                  clearState();
+                  changeForm({ type: false });
+                }}
+              >
+                Here
+              </span>
+            </p>
+          ) : (
+            <p className="text-center">
+              Already have an account ? Klik{" "}
+              <span
+                className="text-decoration-none fw-bold mPoint"
+                onClick={() => {
+                  clearState();
+                  changeForm({ type: true });
+                }}
+              >
+                Here
+              </span>
+            </p>
           )}
-
-          <Form.Group className="mb-3">
-            <Form.Control
-              type="email"
-              placeholder="Email"
-              className={styles.customForm}
-              required
-              onChange={onChange}
-              name="email"
-              value={state?.email}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              className={styles.customForm}
-              required
-              onChange={onChange}
-              name="password"
-              value={state?.password}
-            />
-          </Form.Group>
-          <button className={`${styles.formButton} mt-3 mb-2`}>
-            {isLogin ? "Login" : "Register"}{" "}
-          </button>
-        </Form>
-
-        {isLogin ? (
-          <p className="text-center">
-            Don't have an account ? Klik{" "}
-            <span
-              className="text-decoration-none fw-bold mPoint"
-              onClick={() => {
-                clearState();
-                changeForm({ type: false });
-              }}
-            >
-              Here
-            </span>
-          </p>
-        ) : (
-          <p className="text-center">
-            Already have an account ? Klik{" "}
-            <span
-              className="text-decoration-none fw-bold mPoint"
-              onClick={() => {
-                clearState();
-                changeForm({ type: true });
-              }}
-            >
-              Here
-            </span>
-          </p>
-        )}
-      </Modal.Body>
-    </Modal>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 };
 
