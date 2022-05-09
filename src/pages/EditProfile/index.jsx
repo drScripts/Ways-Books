@@ -28,8 +28,8 @@ export default function EditProfile() {
   });
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
-  const [provinceValue, setProvinceValue] = useState({});
-  const [citiesValue, setCitiesValue] = useState({});
+  const [provinceValue, setProvinceValue] = useState(null);
+  const [citiesValue, setCitiesValue] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
